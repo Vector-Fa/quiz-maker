@@ -92,7 +92,7 @@ class QuizController:
 
     async def change_quiz_activation(self, quiz_id: int) -> QuizActivationStatus:
         quiz = await self.quiz_repository.get_by_id_with_questions(quiz_id=quiz_id)
-        print(quiz.is_active)
+
         if quiz.is_active:
             await self.quiz_repository.update_settings(quiz_id=quiz_id, is_active=False)
             return QuizActivationStatus(message="quiz deactivated", is_active=False)
