@@ -12,7 +12,9 @@ async def update_quiz_date_times(user_client: AsyncClient, quiz_id: int) -> None
     assert response.status_code == 200
 
 
-async def create_short_question_for_quiz(user_client: AsyncClient, quiz_id: int) -> dict:
+async def create_short_question_for_quiz(
+    user_client: AsyncClient, quiz_id: int
+) -> dict:
     short_descriptive_question_data = {
         "question": "my new descriptive question",
         "answer": "optional answer",

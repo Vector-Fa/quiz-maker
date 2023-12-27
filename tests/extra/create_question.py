@@ -3,10 +3,10 @@ from httpx import AsyncClient
 
 async def create_questions(quiz_id: int, user_client: AsyncClient):
     descriptive_question = {
-            "question": "my new descriptive question for shared quiz",
-            "score": 1.5,
-            "quiz_id": quiz_id,
-        }
+        "question": "my new descriptive question for shared quiz",
+        "score": 1.5,
+        "quiz_id": quiz_id,
+    }
     response = await user_client.post(
         "/quiz/add/question/descriptive-short", json=descriptive_question
     )

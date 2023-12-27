@@ -22,9 +22,7 @@ class TestQuizzes:
         ...
 
     @pytest.mark.asyncio
-    async def test_delete_quiz(
-        self, user_client: AsyncClient, new_quiz: dict
-    ):
+    async def test_delete_quiz(self, user_client: AsyncClient, new_quiz: dict):
         assert new_quiz.get("id") is not None
         response = await user_client.delete(f'/quiz/delete/{new_quiz["id"]}')
         assert response.status_code == 200
@@ -175,9 +173,7 @@ class TestQuizzes:
     async def test_changing_quiz_activation_status(
         self, user_client: AsyncClient, new_quiz: dict
     ):
-        await update_quiz_date_times(
-            user_client=user_client, quiz_id=new_quiz["id"]
-        )
+        await update_quiz_date_times(user_client=user_client, quiz_id=new_quiz["id"])
         await create_short_question_for_quiz(
             user_client=user_client, quiz_id=new_quiz["id"]
         )
@@ -256,4 +252,3 @@ class TestQuizzes:
         )
         assert response.status_code == 200
         updated_question_data = response.json()  # should I continue testing
-
