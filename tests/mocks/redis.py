@@ -6,4 +6,7 @@ class MockRedis:
         return True
 
     async def get(self, key):
-        return self.redis[key]
+        return self.redis.get(key)
+
+    async def delete(self, key):
+        del self.redis[key]
