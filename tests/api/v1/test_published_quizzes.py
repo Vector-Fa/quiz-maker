@@ -32,10 +32,10 @@ class TestPublishedQuizzes:
             http_client, data["questions"], shared_quiz["quiz_id"]
         )
 
+    @classmethod
     async def _answer_quiz_questions(
-        self, http_client: AsyncClient, questions: list, quiz_id: int
+        cls, http_client: AsyncClient, questions: list, quiz_id: int
     ):
-        print(questions)
         assert isinstance(questions, list)
         answer_data = {
             "participant_info": {"username": "alireza felani"},
@@ -56,10 +56,6 @@ class TestPublishedQuizzes:
         assert response.status_code == 200
 
     @pytest.mark.asyncio
-    async def test_update_participant_answers(self):
-        ...
-
-    @pytest.mark.asyncio
     async def test_get_all_quiz_participants_answers_with_score(
         self, user_client: AsyncClient, shared_quiz: dict
     ):
@@ -70,7 +66,3 @@ class TestPublishedQuizzes:
         assert response.status_code == 200
         assert isinstance(data["total_quiz_score"], float)
         assert isinstance(data["participant_answers"], list)
-
-    @pytest.mark.asyncio
-    async def test_get_one_participant_answers(self):
-        ...
