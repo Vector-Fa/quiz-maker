@@ -10,3 +10,8 @@ class MockRedis:
 
     async def delete(self, key):
         del self.redis[key]
+
+    async def exists(self, key):
+        if self.redis.get(key):
+            return 1
+        return 0
