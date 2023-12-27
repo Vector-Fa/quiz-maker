@@ -1,7 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
-from src.core.database import Base, TimeStampedBase
+from src.core.database import Base
 
 
 mock_async_engine = create_async_engine("sqlite+aiosqlite:///:memory:")

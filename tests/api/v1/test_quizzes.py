@@ -31,7 +31,7 @@ class TestQuizzes:
     async def test_get_all_created_quizzes(self, user_client: AsyncClient):
         response = await user_client.get("/quiz/all")
         assert response.status_code == 200
-        assert type(response.json()) is list
+        assert isinstance(response.json(), list)
 
     @pytest.mark.asyncio
     async def test_fail_delete_quiz_wrong_id(self, user_client: AsyncClient):
@@ -193,28 +193,57 @@ class TestQuizzes:
         data = response.json()
         assert data["is_active"] is False
 
-    @pytest.mark.skip
+    @pytest.mark.asyncio
     async def test_update_descriptive_question(
         self, user_client: AsyncClient, new_quiz: dict
     ):
         question_json = await create_short_question_for_quiz(
             user_client=user_client, quiz_id=new_quiz["id"]
         )
+        previous_question_score = question_json['score']
         update_question_data = {
             "text": "new question text",
-            "new_score": 1.5,
+            "new_score": previous_question_score + 2,
             "answer": "new answer",
         }
         response = await user_client.put(
             f'/quiz/{new_quiz["id"]}/edit/question/{question_json["id"]}/descriptive',
             json=update_question_data,
         )
+        data = response.json()
         assert response.status_code == 200
-        updated_question_data = response.json()  # should I continue testing
+        assert data['score'] != previous_question_score
 
     @pytest.mark.asyncio
     async def test_update_multiple_option_question(
         self, user_client: AsyncClient, new_quiz: dict
+    ):
+        question_json = await self.create_multiple_option_question(
+            user_client, new_quiz
+        )
+        previous_question_score = question_json['score']
+        update_question_data = {
+            "text": "new question test",
+            "quiz_id": new_quiz["id"],
+            "new_score": previous_question_score + 2,
+            "options": [
+                {"text": "updated wrong answer"},
+                {"text": "updated correct answer in index 1 of options list"},
+                {"text": "new answer added"},
+            ],
+            "correct_option_index": 1,
+        }
+        response = await user_client.put(
+            f'/quiz/{new_quiz["id"]}/edit/question/{question_json["id"]}/multiple-option',
+            json=update_question_data,
+        )
+        assert response.status_code == 200
+        updated_question_data = response.json()
+        assert updated_question_data['score'] != previous_question_score
+
+    @classmethod
+    async def create_multiple_option_question(
+            cls, user_client: AsyncClient, new_quiz: dict
     ):
         multiple_option_question_data = {
             "question": "my multiple option question",
@@ -234,21 +263,4 @@ class TestQuizzes:
         )
         assert response.status_code == 200
         question_json = response.json()
-
-        update_question_data = {
-            "text": "new question test",
-            "quiz_id": new_quiz["id"],
-            "new_score": 1.75,
-            "options": [
-                {"text": "updated wrong answer"},
-                {"text": "updated correct answer in index 1 of options list"},
-                {"text": "new answer added"},
-            ],
-            "correct_option_index": 1,
-        }
-        response = await user_client.put(
-            f'/quiz/{new_quiz["id"]}/edit/question/{question_json["id"]}/multiple-option',
-            json=update_question_data,
-        )
-        assert response.status_code == 200
-        updated_question_data = response.json()  # should I continue testing
+        return question_json
