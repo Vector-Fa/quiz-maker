@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.core.database import TimeStampedBase, Base
 
+
 # noqa: F821
 class Descriptive(TimeStampedBase):
     __tablename__ = "descriptive"

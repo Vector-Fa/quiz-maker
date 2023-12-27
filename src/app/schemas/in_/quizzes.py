@@ -49,7 +49,7 @@ class AddMultipleOptionQuestionIn(BaseModel):
     score: float = 1
     correct_option_index: NonNegativeInt
 
-    _validator = field_validator("correct_option_index")(check_correct_option_index) # noqa
+    _validator = field_validator("correct_option_index")(check_correct_option_index)  # noqa
 
 
 # ====-----====
@@ -105,7 +105,8 @@ class UpdateMultipleOptionQuestionIn(BaseModel):
     new_score: float
     correct_option_index: NonNegativeInt
 
-    _validator = field_validator("correct_option_index")(check_correct_option_index) # noqa
+    _validator = field_validator("correct_option_index")(check_correct_option_index)  # noqa
+
 
 # ====-----====
 

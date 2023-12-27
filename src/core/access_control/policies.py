@@ -1,4 +1,3 @@
-
 from src.app.models import Quiz
 from src.core.excpetions import ForbiddenException
 from src.core.protocols.user_info import UserInfo

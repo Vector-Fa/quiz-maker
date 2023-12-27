@@ -45,9 +45,7 @@ class UserAnswersRepository(BaseRepository[UserDescriptiveAnswer]):
                 descriptive_db.score = user_input.score
         await self.session.commit()
 
-    async def update_multiple_option_answers(
-        self, participant_id: int, ids: list[int]
-    ):
+    async def update_multiple_option_answers(self, participant_id: int, ids: list[int]):
         query = (
             update(UserMultipleOptionAnswer)
             .where(
@@ -56,11 +54,11 @@ class UserAnswersRepository(BaseRepository[UserDescriptiveAnswer]):
             )
             .values(
                 is_correct=case(
-                    (UserMultipleOptionAnswer.is_correct == True, False), else_=True  # noqa: E712
+                    (UserMultipleOptionAnswer.is_correct == True, False), # noqa: E712
+                    else_=True
                 )
             )
         )
         a = await self.session.execute(query)
         await self.session.commit()
         return a.rowcount
-

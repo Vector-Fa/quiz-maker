@@ -1,6 +1,5 @@
 import random
 
-from pydantic import PositiveInt
 
 from src.app.repositories import (
     QuizRepository,
@@ -178,4 +177,3 @@ class QuizController:
             multiple_option_answers=user_answers.multiple_options,
         )
         return MessageResponse(message="accepted")
-

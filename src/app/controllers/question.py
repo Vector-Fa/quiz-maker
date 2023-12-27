@@ -143,4 +143,3 @@ class QuestionController:
             option_id=correct_option_id, question_id=updated_question.id
         )
         return MultipleOptionQuestionOut.model_validate(updated_question)
-

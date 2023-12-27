@@ -1,4 +1,3 @@
-
 from src.app.models import Quiz
 from src.app.repositories import QuizRepository
 from src.core.excpetions import BadRequestException

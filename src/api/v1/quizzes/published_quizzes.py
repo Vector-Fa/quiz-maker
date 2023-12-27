@@ -107,9 +107,9 @@ async def update_participant_answers(
     await access_control((is_admin, is_quiz_owner), user_info=token, quiz=quiz)
 
     user_answers_repository = UserAnswersRepository(db_session)
-    return await UserAnswersController(user_answers_repository).update_participant_answers(
-        participant_answers=participant_answers
-    )
+    return await UserAnswersController(
+        user_answers_repository
+    ).update_participant_answers(participant_answers=participant_answers)
 
 
 @router.get(

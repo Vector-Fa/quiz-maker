@@ -1,4 +1,3 @@
-
 from src.app.repositories import (
     UserAnswersRepository,
     ParticipantRepo,
@@ -36,14 +35,10 @@ class UserAnswersController:
     async def update_descriptive_answers(
         self, participant_answers: UpdateParticipantAnswersIn
     ):
-        descriptive_answer_ids: list[int] = list(
-            participant_answers.descriptive.keys()
-        )
-        descriptive_answers = (
-            await self.answers_repository.get_participant_descriptive(
-                participant_id=participant_answers.participant_id,
-                descriptive_ids=descriptive_answer_ids,
-            )
+        descriptive_answer_ids: list[int] = list(participant_answers.descriptive.keys())
+        descriptive_answers = await self.answers_repository.get_participant_descriptive(
+            participant_id=participant_answers.participant_id,
+            descriptive_ids=descriptive_answer_ids,
         )
         await self.answers_repository.update_user_descriptive_answer(
             descriptive_in=participant_answers.descriptive,
