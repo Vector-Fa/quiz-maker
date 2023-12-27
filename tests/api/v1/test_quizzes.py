@@ -15,13 +15,6 @@ class TestQuizzes:
         assert response.status_code == 403
 
     @pytest.mark.asyncio
-    async def test_admin_can_access_user_quizzes(
-        self, user_client: AsyncClient, new_quiz: dict
-    ):
-        # TODO: add ability to create admins
-        ...
-
-    @pytest.mark.asyncio
     async def test_delete_quiz(self, user_client: AsyncClient, new_quiz: dict):
         assert new_quiz.get("id") is not None
         response = await user_client.delete(f'/quiz/delete/{new_quiz["id"]}')
