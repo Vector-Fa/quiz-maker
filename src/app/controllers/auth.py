@@ -34,7 +34,7 @@ class AuthController:
     ) -> MessageResponse:
         if await self.user_repository.email_exists(user_email):
             raise BadRequestException("Email already exists", "email_exists")
-        if await redis_client.get(user_email):
+        if await redis_client.exists(user_email):
             raise BadRequestException("wait two minute for resend", "spam_verify_code")
 
         verify_code = random.randint(11111, 99999)
