@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.core.database import TimeStampedBase, Base
@@ -38,3 +38,5 @@ class CorrectOption(Base):
     question_id: Mapped[int] = mapped_column(
         ForeignKey("questions.id", ondelete="CASCADE")
     )
+
+    __table_args__ = (UniqueConstraint("question_id"),)
